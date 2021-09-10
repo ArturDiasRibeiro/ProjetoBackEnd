@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title th:remove="all">Order Confirmation</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+      table,
+      table td,
+      table th {
+        border-collapse: collapse;
+        border: 1px solid black;
+      }
+
+      table td,
+      table th {
+        padding: 5px 10px;
+      }
+
+      .centerIt {
+        margin-bottom: 5px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      
+      .valor {
+        font-size: large;
+        font-weight: bold;
+      }
+
+    </style>
+  </head>
+
+  <body style="text-align: center">
+    <h1 style="font-weight: bold">Ordem de Serviço</h1>
+
+    <h2>ID número: <span th:text="${ordem.id}"> </span></h2>
+
+    <h2>Detalhes do pedido:</h2>
+
+    <table class="centerIt">
+      <tr>
+        <th>Modelo</th>
+        <th>Marca</th>
+        <th>Tipo do Equipamento</th>
+        <th>Avaria</th>
+        <th>Imagem</th>
+      </tr>
+
+      <tr th:each="equipamento : ${ordemDto.equipamentos}">
+        <td th:text="${equipamento.modelo}"></td>
+        <td th:text="${equipamento.marca}"></td>
+        <td th:text="${equipamento.classificacaoDoProduto}"></td>
+        <td th:text="${equipamento.avarias}"></td>
+        <td>
+          <a
+            th:href="${equipamento.imagemUrl}"
+            th:text="${equipamento.imagemUrl}"
+            target="_blank"
+          />
+        </td>
+      </tr>
+    </table>
+    <br />
+    <br />
+
+    <div class="valor">
+      <span> Valor total de serviço: </span>
+      <span>R$ </span
+      ><span
+        th:text="${#numbers.formatDecimal(ordem.valor, 0, 'POINT', 2, 'COMMA')}"
+      ></span>
+    </div>
+
+    <p>
+      Cliente:
+      <span th:text="${ordem.cliente.nome}"></span>
+    </p>
+
+    <p>
+      Status da sua ordem de servico:
+      <span th:text="${ordem.status.getDescricao()}"></span>
+    </p>
+
+    <form action="#" th:action="${url}" method="post">
+      <input type="submit" value="Aprovar Ordem" />
+    </form>
+
+    <form action="#" th:action="${url2}" method="post">
+      <input type="submit" value="Recusar Ordem" />
+    </form>
+
+    <h5>
+      Caso desejar realizar alguma alteração, entre em contato em contato com a
+      empresa prestadora do serviço
+    </h5>
+  </body>
+</html>

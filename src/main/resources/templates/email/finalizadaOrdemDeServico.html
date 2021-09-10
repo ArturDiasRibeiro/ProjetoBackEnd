@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title th:remove="all">Ordem de Serviço Concluída</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+      table,
+      table td,
+      table th {
+        border-collapse: collapse;
+        border: 1px solid black;
+      }
+
+      table td,
+      table th {
+        padding: 5px 10px;
+      }
+
+      .centerIt {
+        margin-bottom: 5px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .valor {
+        font-size: large;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body style="text-align: center">
+    <h1 style="font-weight: bold">
+      Ordem de Serviço <span th:text="${ordem.id}"></span>
+    </h1>
+
+    <p>
+      Olá!! <span th:text="${ordem.cliente.nome}"></span> Ficará feliz em saber
+      que sua ordem de serviço de número: <span th:text="${ordem.id}"> </span>.
+    </p>
+
+    <p>sobre o(s) Equipamento(s):</p>
+    <table class="centerIt">
+      <tr>
+        <th>Modelo</th>
+        <th>Marca</th>
+        <th>Tipo do Equipamento</th>
+      </tr>
+
+      <tr th:each="equipamento : ${ordem.equipamentos}">
+        <td th:text="${equipamento.modelo}"></td>
+        <td th:text="${equipamento.marca}"></td>
+        <td th:text="${equipamento.classificacaoDoProduto}"></td>
+      </tr>
+    </table>
+
+    está com o status atualizado para:
+    <span th:text="${ordem.status.getDescricao()}"></span>
+
+    <h5>
+      Caso não saiba do que esta ordem de serviço se trata, por favor, entre em
+      contato em contato com a empresa prestadora do serviço
+    </h5>
+  </body>
+</html>
